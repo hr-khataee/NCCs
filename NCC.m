@@ -1,17 +1,18 @@
 clear all;
 clc;
 close all;
-q = 10;  
-R = 0.9; 
-eta = 1.5; 
-v = 1; 
+
+q = 10; % Flux rate.
+R = 0.9; % interaction radius
+eta = 1.5; % noise
+v = 1; % cell velocity
 Lx = 200; % domain length
-Ly = 30;  
-tsteps = 20; % steps.
+Ly = 30;  % domain width
+tsteps = 20; % simulation steps.
 
 dt = 1;
 nparticles = 0;
-c = []; 
+c = [];                 % 1D binned density.
 Cells_reached_end_of_channel = 0;
 Start_reocrding_density = 0;
 t_cells_filled_channel = 0;
@@ -27,11 +28,11 @@ tr = 1;
 trace_1 = [];
 ncontacts = [];
 
-nparticles = nparticles+1; 
-theta = [theta,2*pi*rand(1,1)]; 
-xpos = [xpos,0*ones(1,1)]; 
-ypos = [ypos,Ly*rand(1,1)];
-tstart = [tstart,1*ones(1,1)];
+nparticles = nparticles+1; % number of particles
+theta = [theta,2*pi*rand(1,1)]; % movement direction
+xpos = [xpos,0*ones(1,1)]; % position_x of the first cell.
+ypos = [ypos,Ly*rand(1,1)]; % position_y of the first cell.
+tstart = [tstart,1*ones(1,1)]; % time that the first cell entered into the channel.
 
 xpos_time = [];
 ypos_time = [];
@@ -53,7 +54,7 @@ for i = 1:tsteps
         xpos = [xpos,0*ones(1,floor(q))];
         ypos = [ypos,Ly*rand(1,floor(q))];
         tstart = [tstart,i*ones(1,floor(q))];
-        if ~mod(i,round(1/(q - floor(q)))) 
+        if ~mod(i,round(1/(q - floor(q)))) % round q.
             nparticles = nparticles+1;
             theta = [theta,2*pi*rand(1,1)];
             xpos = [xpos,0*ones(1,1)];
@@ -65,7 +66,7 @@ for i = 1:tsteps
     pos = [xpos.',ypos.'];
     idx = rangesearch(pos,pos,R);
     for j = randperm(nparticles)
-        if xpos(j)<Lx
+        if xpos(j)<Lx % If cell j is withen the channel
             neighb = idx{j};            
             neighbtheta(j) = atan2(mean(sin(theta(neighb))),mean(cos(theta(neighb)))); 
             dtheta = eta*rand(1,1) - eta/2; 
@@ -77,7 +78,7 @@ for i = 1:tsteps
         end
     end
     
-    for j = randperm(nparticles)
+    for j = randperm(nparticles)     %Find list of particles that are about to hit boundary.
         if xpos(j) <0 
             theta(j) = pi-theta(j);
             xpos(j) = 0;
@@ -92,7 +93,7 @@ for i = 1:tsteps
         end
     end
     
-    delVec = [];
+    delVec = [];     %Delete Particles
     for j = randperm(nparticles)
         if xpos(j) > Lx
             ncross = ncross+1;
@@ -111,7 +112,7 @@ for i = 1:tsteps
         t_cells_filled_channel = i;        
         Start_reocrding_density = 1;
     end    
-    xvel = [];
+    xvel = [];     % Update velocity vectors.
     yvel = [];
     vel = [];
     xvel = v*cos(theta)*dt;
