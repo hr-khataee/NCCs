@@ -88,7 +88,7 @@ for i = 1:tsteps
             theta(j) = 2*pi-theta(j);
         end
         if ypos(j) >Ly
-            ypos(j) = Ly-(ypos(j)-Ly)-0.1;
+            ypos(j) = Ly-0.1;
             theta(j) = 2*pi-theta(j);
         end
     end
