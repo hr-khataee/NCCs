@@ -1,3 +1,10 @@
+% ############################################################################################
+% # Analysis of migration of neural crest cells. 
+% # Author: Hamid Khataee.
+% # Date: 01-December-2020.
+% # Email: h.khataee@uq.edu.au
+% # PLEASE DO NOT REDISTRIBUTE WITHOUT PERMISSION.
+% #############################################################################################
 clear all;
 clc;
 close all;
@@ -8,7 +15,7 @@ eta = 1.5; % noise
 v = 1; % cell velocity
 Lx = 200; % domain length
 Ly = 30;  % domain width
-tsteps = 20; % simulation steps.
+tsteps = 100000; % simulation steps.
 
 dt = 1;
 nparticles = 0;
