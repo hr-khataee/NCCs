@@ -1,5 +1,5 @@
 % ############################################################################################
-% # Analysis of migration of neural crest cells. 
+% # Simulation of collective migration of neural crest cells. 
 % # Author: Hamid Khataee.
 % # Date: 01-December-2020.
 % # Email: h.khataee@uq.edu.au
